@@ -114,4 +114,18 @@ public class ParkingLotTest {
         assertNotNull(fetchOneCar);
         assertNull(fetchCar);
     }
+
+    @Test
+    void should_return_no_car_ticket_and_not_park_in_when_park_from_full_capacity_parking_lot_given_car() {
+        //given
+        Car oneCar = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+
+        //then
+        CarTicket oneCarTicket = parkingLot.park(oneCar);
+
+
+        //when
+        assertNull(oneCarTicket);
+    }
 }
