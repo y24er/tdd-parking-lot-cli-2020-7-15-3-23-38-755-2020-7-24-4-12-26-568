@@ -51,8 +51,9 @@ public class ParkingLotTest {
         CarTicket antherCarTicket = parkingLot.park(anotherCar);
 
         //then
-        assertNotNull(oneCar);
-        assertNotNull(anotherCar);
-
+        assertNotNull(oneCarTicket);
+        assertNotNull(antherCarTicket);
     }
+
+
 }
