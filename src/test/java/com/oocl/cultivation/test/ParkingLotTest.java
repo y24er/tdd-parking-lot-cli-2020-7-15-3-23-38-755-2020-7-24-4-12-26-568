@@ -131,4 +131,21 @@ public class ParkingLotTest {
         //when
         assertNull(oneCarTicket);
     }
+
+    @Test
+    void should_return_car_ticket_and_not_park_in_when_park_from_capacity_plus_1_parking_lot_given_car() {
+        //given
+        Car oneCar = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+
+        //then
+        for (int i = 0; i < 9; i++) {
+            parkingLot.park(new Car());
+        }
+        CarTicket oneCarTicket = parkingLot.park(oneCar);
+
+
+        //when
+        assertNull(oneCarTicket);
+    }
 }
