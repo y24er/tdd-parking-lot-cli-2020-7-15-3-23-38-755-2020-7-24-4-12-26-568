@@ -55,5 +55,22 @@ public class ParkingLotTest {
         assertNotNull(antherCarTicket);
     }
 
+    @Test
+    void should_fetch_multiple_right_car_when_fetch_car_from_parking_lot_given_multiple_correspond_car_ticket() {
+        //given
+        Car oneCar = new Car();
+        Car anotherCar = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        CarTicket oneCarTicket = parkingLot.park(oneCar);
+        CarTicket anotherCarTicket = parkingLot.park(anotherCar);
+
+        //when
+        Car fetchOneCar = parkingLot.fetch(oneCarTicket);
+        Car fetchAnotherCar = parkingLot.fetch(anotherCarTicket);
+
+        //then
+        assertEquals(oneCar, fetchOneCar);
+        assertEquals(anotherCar, fetchAnotherCar);
+    }
 
 }
