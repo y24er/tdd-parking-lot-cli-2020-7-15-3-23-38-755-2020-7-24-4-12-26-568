@@ -9,7 +9,7 @@ public class ParkingLot {
 
     public CarTicket park(Car car) {
         CarTicket carTicket = new CarTicket();
-        if (!packingRooms.containsValue(car) && packingRooms.size() < capacity) {
+        if (car != null && !packingRooms.containsValue(car) && packingRooms.size() < capacity) {
             packingRooms.put(carTicket, car);
             return carTicket;
         } else {
