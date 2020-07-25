@@ -22,6 +22,22 @@ public class ParkingLotTest {
     }
 
     @Test
+    void should_return_null_when_park_given_passing_parked_car() {
+        //given
+        ParkingLot parkingLot = new ParkingLot();
+        Car car = new Car();
+        CarTicket carTicket = parkingLot.park(car);
+
+        //when
+        CarTicket anotherCarTicket = parkingLot.park(car);
+
+        //then
+        assertNotNull(carTicket);
+        assertNull(anotherCarTicket);
+
+    }
+
+    @Test
     void should_fetch_car_when_fetch_car_from_parking_lot_given_car_ticket() {
         //given
         Car car = new Car();
