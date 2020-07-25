@@ -8,8 +8,8 @@ public class ParkingLot {
     Map<CarTicket, Car> packingRooms = new HashMap<>();
 
     public CarTicket park(Car car) {
-        CarTicket carTicket = new CarTicket();
         if (car != null && !packingRooms.containsValue(car) && packingRooms.size() < capacity) {
+            CarTicket carTicket = new CarTicket();
             packingRooms.put(carTicket, car);
             return carTicket;
         } else {
