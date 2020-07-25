@@ -14,4 +14,8 @@ public class ParkingBoy {
     public Car fetch(CarTicket carTicket) {
         return parkingLot.fetch(carTicket);
     }
+
+    public String verifyCarTicket(CarTicket carTicket) {
+        return parkingLot.verifyCarTicket(carTicket);
+    }
 }
