@@ -9,9 +9,12 @@ public class ParkingLot {
 
     public CarTicket park(Car car) {
         CarTicket carTicket = new CarTicket();
-        if (packingRooms.size() != capacity)
+        if (packingRooms.get(car) == null && packingRooms.size() < capacity) {
             packingRooms.put(carTicket, car);
-        return packingRooms.size() != capacity ? carTicket : null;
+            return carTicket;
+        } else {
+            return null;
+        }
     }
 
     public Car fetch(CarTicket carTicket) {
