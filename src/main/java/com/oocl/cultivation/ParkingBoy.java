@@ -10,4 +10,8 @@ public class ParkingBoy {
     public CarTicket park(Car car) {
         return parkingLot.park(car);
     }
+
+    public Car fetch(CarTicket carTicket) {
+        return parkingLot.fetch(carTicket);
+    }
 }
