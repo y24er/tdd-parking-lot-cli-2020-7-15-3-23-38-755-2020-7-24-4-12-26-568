@@ -27,8 +27,10 @@ public class ParkingLotTest {
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
         CarTicket carTicket = parkingLot.park(car);
+
         //when
         Car fetchCar = parkingLot.fetch(carTicket);
+
         //then
         assertEquals(car, fetchCar);
     }
@@ -39,11 +41,9 @@ public class ParkingLotTest {
         //given
         Car oneCar = new Car();
         Car anotherCar = new Car();
-
         ParkingLot parkingLot = new ParkingLot();
 
         //when
-
         CarTicket oneCarTicket = parkingLot.park(oneCar);
         CarTicket antherCarTicket = parkingLot.park(anotherCar);
 
@@ -92,10 +92,10 @@ public class ParkingLotTest {
         //given
         ParkingLot parkingLot = new ParkingLot();
 
-        //then
+        //when
         Car fetchCar = parkingLot.fetch(null);
 
-        //when
+        //then
         assertNull(fetchCar);
     }
 
@@ -104,13 +104,13 @@ public class ParkingLotTest {
         //given
         Car oneCar = new Car();
         ParkingLot parkingLot = new ParkingLot();
-
         CarTicket oneCarTicket = parkingLot.park(oneCar);
         Car fetchOneCar = parkingLot.fetch(oneCarTicket);
-        //then
-        Car fetchCar = parkingLot.fetch(oneCarTicket);
 
         //when
+        Car fetchCar = parkingLot.fetch(oneCarTicket);
+
+        //then
         assertNotNull(fetchOneCar);
         assertNull(fetchCar);
     }
@@ -121,31 +121,29 @@ public class ParkingLotTest {
         Car oneCar = new Car();
         ParkingLot parkingLot = new ParkingLot();
 
-        //then
+        //when
         for (int i = 0; i < 10; i++) {
             parkingLot.park(new Car());
         }
         CarTicket oneCarTicket = parkingLot.park(oneCar);
 
-
-        //when
+        //then
         assertNull(oneCarTicket);
     }
 
     @Test
-    void should_return_car_ticket_and_not_park_in_when_park_from_capacity_plus_1_parking_lot_given_car() {
+    void should_return_car_ticket_and_park_in_when_park_from_one_capacity_left_parking_lot_given_car() {
         //given
         Car oneCar = new Car();
         ParkingLot parkingLot = new ParkingLot();
 
-        //then
+        //when
         for (int i = 0; i < 9; i++) {
             parkingLot.park(new Car());
         }
         CarTicket oneCarTicket = parkingLot.park(oneCar);
 
-
-        //when
-        assertNull(oneCarTicket);
+        //then
+        assertNotNull(oneCarTicket);
     }
 }
