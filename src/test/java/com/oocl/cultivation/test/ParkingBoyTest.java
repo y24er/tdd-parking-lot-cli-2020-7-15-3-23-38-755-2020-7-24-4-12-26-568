@@ -45,7 +45,7 @@ public class ParkingBoyTest {
         Car car = new Car("粤B 12345");
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         CarTicket carTicket = parkingBoy.park(car);
-        CarTicket wrongCarTicket = new CarTicket(6,"粤A 12245");
+        CarTicket wrongCarTicket = new CarTicket(6, "粤A 12245");
 
         //when
         String result = parkingBoy.verifyCarTicket(wrongCarTicket);
@@ -53,6 +53,23 @@ public class ParkingBoyTest {
         //then
         assertNotNull(carTicket);
         assertNotEquals(carTicket, wrongCarTicket);
+        assertEquals("Unrecognized parking ticket.", result);
+    }
+
+    @Test
+    void should_not_fetch_car_and_return_unrecognized_parking_ticket_when_fetch_car_given_has_been_used_ticket() {
+        //given
+        Car car = new Car("粤B 12345");
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        CarTicket carTicket = parkingBoy.park(car);
+        Car fetchCar = parkingBoy.fetch(carTicket);
+
+        //when
+        String result = parkingBoy.verifyCarTicket(carTicket);
+
+        //then
+        assertNotNull(carTicket);
+        assertEquals(car, fetchCar);
         assertEquals("Unrecognized parking ticket.", result);
     }
 }
