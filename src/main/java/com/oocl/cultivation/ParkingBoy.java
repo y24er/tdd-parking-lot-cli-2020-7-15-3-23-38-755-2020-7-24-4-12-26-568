@@ -1,21 +1,33 @@
 package com.oocl.cultivation;
 
 public class ParkingBoy {
-    ParkingLot parkingLot = new ParkingLot();
+    ParkingLot parkingLot;
 
     public ParkingBoy(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
 
-    public CarTicket park(Car car) {
-        return parkingLot.park(car);
+    public Object park(Car car) {
+        String message = checkParkingLotLeftCapacity();
+        if (message == null)
+            return parkingLot.park(car);
+        else
+            return message;
     }
 
-    public Car fetch(CarTicket carTicket) {
-        return parkingLot.fetch(carTicket);
+    public Object fetch(CarTicket carTicket) {
+        String message = verifyCarTicket(carTicket);
+        if (message == null)
+            return parkingLot.fetch(carTicket);
+        else
+            return message;
     }
 
     public String verifyCarTicket(CarTicket carTicket) {
         return parkingLot.verifyCarTicket(carTicket);
+    }
+
+    public String checkParkingLotLeftCapacity() {
+        return parkingLot.isFullCapacity();
     }
 }

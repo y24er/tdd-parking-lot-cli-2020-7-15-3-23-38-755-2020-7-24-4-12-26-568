@@ -17,7 +17,7 @@ public class ParkingLot {
     }
 
     public CarTicket park(Car car) {
-        if (car != null && !isParkIn(car) && packingRooms.size() < capacity) {
+        if (car != null && !isParkIn(car) && isFullCapacity() == null) {
             CarTicket carTicket = new CarTicket(car.getLicensePlateNumber());
             packingRooms.put(carTicket, car);
             return carTicket;
@@ -33,11 +33,21 @@ public class ParkingLot {
     }
 
     public String verifyCarTicket(CarTicket carTicket) {
-        String result = null;
-        if (!packingRooms.containsValue(carTicket)) {
-            result = "Unrecognized parking ticket.";
+        String message = null;
+        if (carTicket == null) {
+            message = "Please provide your parking ticket.";
         }
-        return result;
+        if (carTicket != null && !packingRooms.containsKey(carTicket)) {
+            message = "Unrecognized parking ticket.";
+        }
+        return message;
+    }
+
+    public String isFullCapacity() {
+        String message = null;
+        if (capacity == packingRooms.size())
+            message = "Not enough position.";
+        return message;
     }
 
     public boolean isParkIn(Car car) {
