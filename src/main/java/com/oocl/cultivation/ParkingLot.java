@@ -4,8 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParkingLot {
-    private final int capacity = 10;
     Map<CarTicket, Car> packingRooms = new HashMap<>();
+    private int capacity;
+
+    public ParkingLot() {
+        this.capacity = 10;
+    }
+
+    public ParkingLot(int capacity) {
+        this.capacity = capacity;
+    }
 
     public CarTicket park(Car car) {
         if (car != null && !packingRooms.containsValue(car) && packingRooms.size() < capacity) {
