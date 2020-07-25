@@ -17,7 +17,7 @@ public class ParkingBoyTest {
         Car car = new Car();
 
         //when
-        CarTicket carTicket = parkingBoy.park(car);
+        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
 
         //then
         assertNotNull(carTicket);
@@ -29,10 +29,10 @@ public class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Car car = new Car();
-        CarTicket carTicket = parkingBoy.park(car);
+        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
 
         //when
-        Car fetchCar = parkingBoy.fetch(carTicket);
+        Car fetchCar = (Car) parkingBoy.fetch(carTicket);
 
         //then
         assertNotNull(carTicket);
@@ -44,7 +44,7 @@ public class ParkingBoyTest {
         //given
         Car car = new Car("粤B 12345");
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
-        CarTicket carTicket = parkingBoy.park(car);
+        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
         CarTicket wrongCarTicket = new CarTicket(6, "粤A 12245");
 
         //when
@@ -61,15 +61,41 @@ public class ParkingBoyTest {
         //given
         Car car = new Car("粤B 12345");
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
-        CarTicket carTicket = parkingBoy.park(car);
-        Car fetchCar = parkingBoy.fetch(carTicket);
+        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
+        Car fetchCar = (Car) parkingBoy.fetch(carTicket);
 
         //when
-        String result = parkingBoy.verifyCarTicket(carTicket);
+        String result = (String) parkingBoy.fetch(carTicket);
 
         //then
         assertNotNull(carTicket);
         assertEquals(car, fetchCar);
         assertEquals("Unrecognized parking ticket.", result);
+    }
+
+    @Test
+    void should_not_fetch_car_and_return_please_provide_your_parking_ticket_ticket_when_fetch_car_given_null_car_ticket() {
+        //given
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+
+        //when
+        String result = (String) parkingBoy.fetch(null);
+
+        //then
+        assertEquals("Please provide your parking ticket.", result);
+    }
+
+    @Test
+    void should_not_park_car_and_return_not_enough_position_when_fetch_car_given_car() {
+        //given
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        for (int i = 0; i < 10; i++) {
+            parkingBoy.park(new Car());
+        }
+        //when
+        String result = (String) parkingBoy.park(new Car());
+
+        //then
+        assertEquals("Not enough position.", result);
     }
 }
