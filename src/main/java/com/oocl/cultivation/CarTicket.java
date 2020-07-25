@@ -43,4 +43,8 @@ public class CarTicket {
     public boolean isFetch() {
         return isFetch;
     }
+
+    public void setFetch(boolean fetch) {
+        isFetch = fetch;
+    }
 }

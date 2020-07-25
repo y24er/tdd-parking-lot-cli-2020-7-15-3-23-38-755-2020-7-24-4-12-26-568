@@ -5,20 +5,27 @@ import java.util.Map;
 
 public class ParkingLot {
     Map<CarTicket, Car> packingRooms = new HashMap<>();
-
     private int capacity;
+    private TicketSystem ticketSystem;
 
     public ParkingLot() {
         this.capacity = 10;
+        ticketSystem = new TicketSystem();
     }
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
     }
 
+    public ParkingLot(int capacity, TicketSystem ticketSystem) {
+        this.capacity = capacity;
+        this.ticketSystem = ticketSystem;
+    }
+
     public CarTicket park(Car car) {
         if (car != null && !isParkIn(car) && isFullCapacity() == null) {
-            CarTicket carTicket = new CarTicket(car.getLicensePlateNumber());
+            CarTicket carTicket = ticketSystem.createCarTicket(car.getLicensePlateNumber());
+//            CarTicket carTicket = new CarTicket(car.getLicensePlateNumber());
             packingRooms.put(carTicket, car);
             return carTicket;
         } else {
@@ -29,18 +36,20 @@ public class ParkingLot {
     public Car fetch(CarTicket carTicket) {
         Car fetchCar = packingRooms.get(carTicket);
         packingRooms.remove(carTicket);
+        ticketSystem.updateCarTicket(carTicket);
         return fetchCar;
     }
 
     public String verifyCarTicket(CarTicket carTicket) {
-        String message = null;
+        return ticketSystem.verifyCarTicket(carTicket);
+        /*String message = null;
         if (carTicket == null) {
             message = "Please provide your parking ticket.";
         }
         if (carTicket != null && !packingRooms.containsKey(carTicket)) {
             message = "Unrecognized parking ticket.";
         }
-        return message;
+        return message;*/
     }
 
     public String isFullCapacity() {
