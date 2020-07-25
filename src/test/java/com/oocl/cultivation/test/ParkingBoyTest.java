@@ -6,7 +6,7 @@ import com.oocl.cultivation.ParkingBoy;
 import com.oocl.cultivation.ParkingLot;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingBoyTest {
     @Test
@@ -39,5 +39,20 @@ public class ParkingBoyTest {
         assertNotNull(fetchCar);
     }
 
+    @Test
+    void should_not_fetch_car_return_unrecognized_parking_ticket_when_fetch_car_given_wrong_ticket() {
+        //given
+        Car car = new Car("粤B 12345");
+        ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
+        CarTicket carTicket = parkingBoy.park(car);
+        CarTicket wrongCarTicket = new CarTicket(6,"粤A 12245");
 
+        //when
+        String result = parkingBoy.verifyCarTicket(wrongCarTicket);
+
+        //then
+        assertNotNull(carTicket);
+        assertNotEquals(carTicket, wrongCarTicket);
+        assertEquals("Unrecognized parking ticket.", result);
+    }
 }
