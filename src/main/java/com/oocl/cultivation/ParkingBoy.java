@@ -48,23 +48,13 @@ public class ParkingBoy {
     }
 
     public Object park(Car car) {
-        ParkingLot parkingLot = parkingLots.get(0);
-        String message1 = checkParkingLotLeftCapacity(parkingLot);
-        if (message1 == null)
-            return parkingLot.park(car);
-
-        int indexOfNowParkingLot = parkingLots.indexOf(parkingLot);
-        while (indexOfNowParkingLot + 1 != parkingLots.size()) {
-            indexOfNowParkingLot = indexOfNowParkingLot + 1;
-            ParkingLot newParkingLot = parkingLots.get(indexOfNowParkingLot);
-            String message2 = checkParkingLotLeftCapacity(newParkingLot);
-            if (message2 == null) {
-                return newParkingLot.park(car);
-            } else {
-                return message2;
-            }
+        String message = null;
+        for (ParkingLot parkingLot : parkingLots) {
+            message = checkParkingLotLeftCapacity(parkingLot);
+            if (message == null)
+                return parkingLot.park(car);
         }
-        return message1;
+        return message;
     }
 
     public String checkParkingLotLeftCapacity(ParkingLot parkingLot) {
