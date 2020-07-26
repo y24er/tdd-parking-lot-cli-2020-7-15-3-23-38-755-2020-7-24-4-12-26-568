@@ -36,6 +36,7 @@ public class SmartParkingBoyTest {
         Car car1 = new Car();
         Car car2 = new Car();
         Car car3 = new Car();
+
         //when
         CarTicket carTicket1 = (CarTicket) smartParkingBoy.park(car1);
         CarTicket carTicket2 = (CarTicket) smartParkingBoy.park(car2);

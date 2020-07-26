@@ -13,9 +13,4 @@ public class Car {
     public String getLicensePlateNumber() {
         return licensePlateNumber;
     }
-
-    public void setLicensePlateNumber(String licensePlateNumber) {
-        this.licensePlateNumber = licensePlateNumber;
-    }
-
 }

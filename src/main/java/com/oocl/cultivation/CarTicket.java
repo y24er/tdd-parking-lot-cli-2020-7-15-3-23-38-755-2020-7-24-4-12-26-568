@@ -1,7 +1,5 @@
 package com.oocl.cultivation;
 
-import java.util.Random;
-
 public class CarTicket {
     private int id;
     private String licensePlateNumber;
@@ -9,15 +7,6 @@ public class CarTicket {
     private int parkingLotId;
 
     public CarTicket() {
-    }
-
-    public CarTicket(int id) {
-        this.id = id;
-    }
-
-    public CarTicket(String licensePlateNumber) {
-        this.id = new Random().nextInt(1000);
-        this.licensePlateNumber = licensePlateNumber;
     }
 
     public CarTicket(int id, String licensePlateNumber) {
@@ -37,14 +26,6 @@ public class CarTicket {
         if (o == null || getClass() != o.getClass()) return false;
         CarTicket carTicket = (CarTicket) o;
         return id == carTicket.id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getLicensePlateNumber() {
-        return licensePlateNumber;
     }
 
     public boolean isFetch() {

@@ -13,10 +13,6 @@ public class ParkingLot {
         this.capacity = 10;
     }
 
-    public ParkingLot(int capacity) {
-        this.capacity = capacity;
-    }
-
     public ParkingLot(int id, int capacity) {
         this.id = id;
         this.capacity = capacity;
@@ -49,8 +45,9 @@ public class ParkingLot {
 
     public String isFullCapacity() {
         String message = null;
-        if (capacity == packingRooms.size())
+        if (capacity == packingRooms.size()) {
             message = "Not enough position.";
+        }
         return message;
     }
 

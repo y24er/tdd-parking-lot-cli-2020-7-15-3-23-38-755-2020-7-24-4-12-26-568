@@ -12,21 +12,15 @@ public class ParkingBoy {
         }
     }
 
-
     public ParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
     }
 
-    public void boundPackingLot(ParkingLot parkingLot) {
-        parkingLots.add(parkingLot);
-    }
-
-
     public Object fetch(CarTicket carTicket) {
         String message = verifyCarTicket(carTicket);
-        if (message == null)
+        if (message == null) {
             return getParkingLotByParkingLotId(carTicket.getParkingLotId()).fetch(carTicket);
-        else
+        } else
             return message;
     }
 
@@ -41,23 +35,21 @@ public class ParkingBoy {
     }
 
     public String verifyCarTicket(CarTicket carTicket) {
-        if (carTicket == null)
+        if (carTicket == null) {
             return "Please provide your parking ticket.";
+        }
         int parkingLotId = carTicket.getParkingLotId();
         ParkingLot parkingLot = getParkingLotByParkingLotId(parkingLotId);
         return parkingLot.verifyCarTicket(carTicket);
-    }
-
-    public String checkParkingLotLeftCapacity() {
-        return parkingLots.get(0).isFullCapacity();
     }
 
     public Object park(Car car) {
         String message = null;
         for (ParkingLot parkingLot : parkingLots) {
             message = checkParkingLotLeftCapacity(parkingLot);
-            if (message == null)
+            if (message == null) {
                 return parkingLot.park(car);
+            }
         }
         return message;
     }

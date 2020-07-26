@@ -8,10 +8,11 @@ public class SmartParkingBoy extends ParkingBoy {
     @Override
     public Object park(Car car) {
         ParkingLot parkingLot = getMoreEmptyPositionParkingLot();
-        if (parkingLot != null)
+        if (parkingLot != null) {
             return parkingLot.park(car);
-        else
+        } else {
             return "Not enough position.";
+        }
     }
 
     public ParkingLot getMoreEmptyPositionParkingLot() {
