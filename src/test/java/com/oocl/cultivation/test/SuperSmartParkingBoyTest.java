@@ -45,4 +45,24 @@ public class SuperSmartParkingBoyTest {
         assertEquals(2, carTicket3.getParkingLotId());
     }
 
+    @Test
+    void should_return_not_enough_position_when_park_car_in_all_full_parking_lot_given_car() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot(1, 5);
+        ParkingLot parkingLot2 = new ParkingLot(2, 6);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1, parkingLot2);
+        for (int i = 0; i < 11; i++) {
+            superSmartParkingBoy.park(new Car());
+        }
+
+        //when
+        Object result = superSmartParkingBoy.park(new Car());
+        String message = null;
+        if (result instanceof String)
+            message = (String) result;
+
+        //then
+        assertNotNull(result);
+        assertEquals("Not enough position.", message);
+    }
 }
