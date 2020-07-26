@@ -25,21 +25,26 @@ public class ParkingBoy {
     public Object fetch(CarTicket carTicket) {
         String message = verifyCarTicket(carTicket);
         if (message == null)
-            return parkingLots.get(0).fetch(carTicket);
+            return getParkingLotByParkingLotId(carTicket.getParkingLotId()).fetch(carTicket);
         else
             return message;
     }
 
-    public String verifyCarTicket(CarTicket carTicket) {
-        if (carTicket == null)
-            return "Please provide your parking ticket.";
-        int parkingLotId = carTicket.getParkingLotId();
+    public ParkingLot getParkingLotByParkingLotId(int parkingLotId) {
         ParkingLot parkingLot = null;
         for (ParkingLot lot : parkingLots) {
             if (lot.getId() == parkingLotId) {
                 parkingLot = lot;
             }
         }
+        return parkingLot;
+    }
+
+    public String verifyCarTicket(CarTicket carTicket) {
+        if (carTicket == null)
+            return "Please provide your parking ticket.";
+        int parkingLotId = carTicket.getParkingLotId();
+        ParkingLot parkingLot = getParkingLotByParkingLotId(parkingLotId);
         return parkingLot.verifyCarTicket(carTicket);
     }
 
