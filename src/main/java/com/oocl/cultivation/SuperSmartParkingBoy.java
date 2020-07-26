@@ -6,6 +6,10 @@ public class SuperSmartParkingBoy extends ParkingBoy {
         super(parkingLot1);
     }
 
+    public static void main(String[] args) {
+
+    }
+
     @Override
     public Object park(Car car) {
         ParkingLot parkingLot = getLargerAvailablePositionRateParkingLot();
