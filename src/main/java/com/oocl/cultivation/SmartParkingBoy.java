@@ -1,8 +1,5 @@
 package com.oocl.cultivation;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SmartParkingBoy extends ParkingBoy {
     public SmartParkingBoy(ParkingLot... parkingLot) {
         super(parkingLot);
@@ -10,24 +7,19 @@ public class SmartParkingBoy extends ParkingBoy {
 
     @Override
     public Object park(Car car) {
-        ParkingLot parkingLot = getMoreEmptyPositionParingLot();
+        ParkingLot parkingLot = getMoreEmptyPositionParkingLot();
         if (parkingLot != null)
             return parkingLot.park(car);
         else
             return "Not enough position.";
     }
 
-    public ParkingLot getMoreEmptyPositionParingLot() {
-        Map<ParkingLot, Integer> emptyPositionNumberFromAllParkingLot = new HashMap<>();
-
-        for (ParkingLot parkingLot : parkingLots) {
-            emptyPositionNumberFromAllParkingLot.put(parkingLot, parkingLot.getEmptyPositionNumber());
-        }
-        int maxNumber = 0;
+    public ParkingLot getMoreEmptyPositionParkingLot() {
         ParkingLot parkingLot = null;
-        for (ParkingLot lot : emptyPositionNumberFromAllParkingLot.keySet()) {
+        int maxNumber = 0;
+        for (ParkingLot lot : parkingLots) {
             int emptyPositionNumber = lot.getEmptyPositionNumber();
-            if (emptyPositionNumber >= maxNumber) {
+            if (emptyPositionNumber > maxNumber) {
                 maxNumber = emptyPositionNumber;
                 parkingLot = lot;
             }
