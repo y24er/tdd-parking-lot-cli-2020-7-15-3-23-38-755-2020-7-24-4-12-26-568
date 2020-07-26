@@ -6,8 +6,7 @@ import com.oocl.cultivation.ParkingLot;
 import com.oocl.cultivation.SuperSmartParkingBoy;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SuperSmartParkingBoyTest {
     @Test
@@ -65,4 +64,27 @@ public class SuperSmartParkingBoyTest {
         assertNotNull(result);
         assertEquals("Not enough position.", message);
     }
+
+    @Test
+    void should_return_car_when_fetch_car_given_car_ticket() {
+        //given
+        ParkingLot parkingLot1 = new ParkingLot(1, 5);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1);
+        Car car = new Car();
+        Object parkResult = superSmartParkingBoy.park(car);
+        CarTicket carTicket = null;
+        if (parkResult instanceof CarTicket)
+            carTicket = (CarTicket) parkResult;
+
+        //when
+        Object fetchResult = superSmartParkingBoy.fetch(carTicket);
+        Car fetchCar = null;
+        if (fetchResult instanceof Car)
+            fetchCar = (Car) fetchResult;
+
+        //then
+        assertNotNull(fetchCar);
+        assertEquals(car, fetchCar);
+    }
+
 }
