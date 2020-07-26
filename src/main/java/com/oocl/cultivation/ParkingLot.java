@@ -61,4 +61,8 @@ public class ParkingLot {
     public int getEmptyPositionNumber() {
         return capacity - packingRooms.size();
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
 }
