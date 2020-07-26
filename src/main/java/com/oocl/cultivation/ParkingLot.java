@@ -57,4 +57,8 @@ public class ParkingLot {
     public boolean isParkIn(Car car) {
         return packingRooms.containsValue(car);
     }
+
+    public int getEmptyPositionNumber() {
+        return capacity - packingRooms.size();
+    }
 }
