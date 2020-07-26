@@ -130,4 +130,36 @@ public class ParkingBoyTest {
         assertEquals(2, parkingLotId);
     }
 
+    @Test
+    void should_return_not_enough_ticket_when_park_car_from_all_full_capacity_parking_lot_given_car() {
+        //given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        ParkingLot parkingLot1 = new ParkingLot(1, 5);
+        parkingLots.add(parkingLot1);
+        ParkingLot parkingLot2 = new ParkingLot(2, 5);
+        parkingLots.add(parkingLot2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        for (int i = 0; i < 5; i++) {
+            parkingBoy.park(new Car("yaa" + i));
+        }
+        String messageFromParkingLot1Capacity = parkingBoy.checkParkingLotLeftCapacity(parkingLot1);
+
+        //when
+        for (int i = 0; i < 5; i++) {
+            parkingBoy.park(new Car("yaa" + i));
+        }
+        String messageFromParkingLot2Capacity = parkingBoy.checkParkingLotLeftCapacity(parkingLot2);
+
+        String messageFromParkCar = null;
+        Object result = parkingBoy.park(new Car("license"));
+        if (result instanceof String) {
+            messageFromParkCar = (String) result;
+        }
+
+        //then
+        assertEquals("Not enough position.", messageFromParkingLot1Capacity);
+        assertEquals("Not enough position.", messageFromParkingLot2Capacity);
+        assertEquals("Not enough position.", messageFromParkCar);
+    }
+
 }
