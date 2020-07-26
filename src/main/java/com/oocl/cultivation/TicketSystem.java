@@ -14,8 +14,16 @@ public class TicketSystem {
         return carTicket;
     }
 
+    public CarTicket createCarTicket(String licensePlateNumber, int parkingLotId) {
+        int ticketId = new Random().nextInt(10000);
+        CarTicket carTicket = new CarTicket(ticketId, licensePlateNumber, parkingLotId);
+        carTickets.add(carTicket);
+        return carTicket;
+    }
+
     public void updateCarTicket(CarTicket carTicket) {
-        carTicket.setFetch(true);
+        if (carTicket != null)
+            carTicket.setFetch(true);
     }
 
     public String verifyCarTicket(CarTicket carTicket) {
@@ -23,7 +31,7 @@ public class TicketSystem {
         if (carTicket == null) {
             message = "Please provide your parking ticket.";
         }
-        if (carTicket != null && (!carTickets.contains(carTicket) || carTicket.isFetch() == true)) {
+        if (carTicket != null && (!carTickets.contains(carTicket) || carTicket.isFetch())) {
             message = "Unrecognized parking ticket.";
         }
         return message;

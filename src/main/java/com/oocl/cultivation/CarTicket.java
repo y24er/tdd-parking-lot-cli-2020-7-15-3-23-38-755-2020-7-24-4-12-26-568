@@ -6,6 +6,7 @@ public class CarTicket {
     private int id;
     private String licensePlateNumber;
     private boolean isFetch;
+    private int parkingLotId;
 
     public CarTicket() {
     }
@@ -22,6 +23,12 @@ public class CarTicket {
     public CarTicket(int id, String licensePlateNumber) {
         this.id = id;
         this.licensePlateNumber = licensePlateNumber;
+    }
+
+    public CarTicket(int id, String licensePlateNumber, int parkingLotId) {
+        this.id = id;
+        this.licensePlateNumber = licensePlateNumber;
+        this.parkingLotId = parkingLotId;
     }
 
     @Override
@@ -46,5 +53,9 @@ public class CarTicket {
 
     public void setFetch(boolean fetch) {
         isFetch = fetch;
+    }
+
+    public int getParkingLotId() {
+        return parkingLotId;
     }
 }
