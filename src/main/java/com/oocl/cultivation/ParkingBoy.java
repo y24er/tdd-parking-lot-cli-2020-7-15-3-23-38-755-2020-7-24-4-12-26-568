@@ -12,10 +12,6 @@ public class ParkingBoy {
         }
     }
 
-    public ParkingBoy(List<ParkingLot> parkingLots) {
-        this.parkingLots = parkingLots;
-    }
-
     public Car fetch(CarTicket carTicket) {
         if (carTicket == null) {
             throw new RuntimeException("Please provide your parking ticket.");
