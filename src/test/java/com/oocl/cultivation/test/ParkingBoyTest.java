@@ -24,7 +24,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    void should_fetch_car_when_fetch_car_from_parking_lot_given_car_ticket() {
+    void should_return_right_car_when_fetch_car_given_car_ticket() {
         //given
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
