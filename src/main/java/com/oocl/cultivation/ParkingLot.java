@@ -54,15 +54,4 @@ public class ParkingLot {
     public int getCapacity() {
         return capacity;
     }
-
-    public String verifyCarTicket(CarTicket carTicket) {
-        String message = null;
-        if (carTicket == null) {
-            message = "Please provide your parking ticket.";
-        }
-        if (carTicket != null && !packingRooms.containsKey(carTicket)) {
-            message = "Unrecognized parking ticket.";
-        }
-        return message;
-    }
 }

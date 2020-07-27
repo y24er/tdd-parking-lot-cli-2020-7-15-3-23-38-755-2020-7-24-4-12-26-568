@@ -51,12 +51,14 @@ public class ParkingBoyTest {
         CarTicket wrongCarTicket = new CarTicket();
 
         //when
-        String result = parkingBoy.verifyCarTicket(wrongCarTicket);
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            parkingBoy.fetch(wrongCarTicket);
+        });
 
         //then
         assertNotNull(carTicket);
         assertNotEquals(carTicket, wrongCarTicket);
-        assertEquals("Unrecognized parking ticket.", result);
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
     @Test
@@ -65,15 +67,18 @@ public class ParkingBoyTest {
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         CarTicket carTicket = (CarTicket) parkingBoy.park(car);
-        Car fetchCar = (Car) parkingBoy.fetch(carTicket);
+        Car fetchCar = parkingBoy.fetch(carTicket);
 
         //when
-        String result = (String) parkingBoy.fetch(carTicket);
+
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            parkingBoy.fetch(carTicket);
+        });
 
         //then
         assertNotNull(carTicket);
         assertEquals(car, fetchCar);
-        assertEquals("Unrecognized parking ticket.", result);
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
     @Test
@@ -82,10 +87,11 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
 
         //when
-        String result = (String) parkingBoy.fetch(null);
-
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            parkingBoy.fetch(null);
+        });
         //then
-        assertEquals("Please provide your parking ticket.", result);
+        assertEquals("Please provide your parking ticket.", exception.getMessage());
     }
 
     @Test

@@ -16,13 +16,15 @@ public class ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
-    public Object fetch(CarTicket carTicket) {
-        String message = verifyCarTicket(carTicket);
-        if (message == null) {
-            ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
-            return parkingLot.fetch(carTicket);
-        } else
-            return message;
+    public Car fetch(CarTicket carTicket) {
+        if (carTicket == null) {
+            throw new RuntimeException("Please provide your parking ticket.");
+        }
+        ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
+        if (parkingLot == null) {
+            throw new RuntimeException("Unrecognized parking ticket.");
+        }
+        return parkingLot.fetch(carTicket);
     }
 
     public ParkingLot getParkingLotFromCarTicker(CarTicket carTicket) {
@@ -34,17 +36,6 @@ public class ParkingBoy {
             }
         }
         return parkingLot;
-    }
-
-    public String verifyCarTicket(CarTicket carTicket) {
-        ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
-        if (carTicket == null) {
-            return "Please provide your parking ticket.";
-        }
-        if (parkingLot == null) {
-            return "Unrecognized parking ticket.";
-        }
-        return parkingLot.verifyCarTicket(carTicket);
     }
 
     public Object park(Car car) {
