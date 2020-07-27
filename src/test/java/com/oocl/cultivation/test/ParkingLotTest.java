@@ -22,7 +22,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_park_given_passing_parked_car() {
+    void should_return_null_car_ticket_when_park_given_passing_parked_car() {
         //given
         ParkingLot parkingLot = new ParkingLot();
         Car car = new Car();
@@ -37,7 +37,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_park_given_null() {
+    void should_return_null_car_ticket_when_park_given_null_car() {
         //given
         ParkingLot parkingLot = new ParkingLot();
 
@@ -50,7 +50,7 @@ public class ParkingLotTest {
 
 
     @Test
-    void should_fetch_car_when_fetch_car_from_parking_lot_given_car_ticket() {
+    void should_return_car_when_fetch_car_given_car_ticket() {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
@@ -81,7 +81,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_fetch_multiple_right_car_when_fetch_car_from_parking_lot_given_multiple_correspond_car_ticket() {
+    void should_fetch_multiple_right_car_when_fetch_car_given_multiple_correspond_car_ticket() {
         //given
         Car oneCar = new Car();
         Car anotherCar = new Car();
