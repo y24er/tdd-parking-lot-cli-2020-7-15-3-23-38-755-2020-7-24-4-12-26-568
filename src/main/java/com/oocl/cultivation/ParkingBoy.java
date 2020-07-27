@@ -36,9 +36,6 @@ public class ParkingBoy {
 
     public CarTicket park(Car car) {
         CarTicket carTicket = null;
-        if (car == null) {
-            return null;
-        }
         for (ParkingLot parkingLot : parkingLots) {
             if (!parkingLot.isFull()) {
                 carTicket = parkingLot.park(car);
