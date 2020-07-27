@@ -37,19 +37,6 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_return_null_when_park_given_null() {
-        //given
-        ParkingLot parkingLot = new ParkingLot();
-
-        //when
-        CarTicket carTicket = parkingLot.park(null);
-
-        //then
-        assertNull(carTicket);
-    }
-
-
-    @Test
     void should_fetch_car_when_fetch_car_from_parking_lot_given_car_ticket() {
         //given
         Car car = new Car();

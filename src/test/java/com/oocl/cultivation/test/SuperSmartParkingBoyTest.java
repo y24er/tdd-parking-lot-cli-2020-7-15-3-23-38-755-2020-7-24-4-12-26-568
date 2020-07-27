@@ -12,8 +12,8 @@ public class SuperSmartParkingBoyTest {
     @Test
     void should_return_car_ticket_when_park_car_in_larger_available_position_rate_parking_lot_given_car() {
         //given
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
-        ParkingLot parkingLot2 = new ParkingLot(2, 6);
+        ParkingLot parkingLot1 = new ParkingLot(5);
+        ParkingLot parkingLot2 = new ParkingLot(6);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1, parkingLot2);
 
         //when
@@ -46,28 +46,24 @@ public class SuperSmartParkingBoyTest {
     @Test
     void should_return_not_enough_position_when_park_car_in_all_full_parking_lot_given_car() {
         //given
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
-        ParkingLot parkingLot2 = new ParkingLot(2, 6);
+        ParkingLot parkingLot1 = new ParkingLot(5);
+        ParkingLot parkingLot2 = new ParkingLot(6);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1, parkingLot2);
         for (int i = 0; i < 11; i++) {
             superSmartParkingBoy.park(new Car());
         }
 
         //when
-        Object result = superSmartParkingBoy.park(new Car());
-        String message = null;
-        if (result instanceof String)
-            message = (String) result;
+        Throwable exception = assertThrows(RuntimeException.class, () -> superSmartParkingBoy.park(new Car()));
 
         //then
-        assertNotNull(result);
-        assertEquals("Not enough position.", message);
+        assertEquals("Not enough position.", exception.getMessage());
     }
 
     @Test
     void should_return_car_when_fetch_car_given_car_ticket() {
         //given
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
+        ParkingLot parkingLot1 = new ParkingLot(5);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1);
         Car car = new Car();
         Object parkResult = superSmartParkingBoy.park(car);

@@ -11,12 +11,12 @@ public class SuperSmartParkingBoy extends ParkingBoy {
     }
 
     @Override
-    public Object park(Car car) {
+    public CarTicket park(Car car) {
         ParkingLot parkingLot = getLargerAvailablePositionRateParkingLot();
         if (parkingLot != null)
             return parkingLot.park(car);
         else
-            return "Not enough position.";
+            throw new RuntimeException("Not enough position.");
     }
 
     public ParkingLot getLargerAvailablePositionRateParkingLot() {

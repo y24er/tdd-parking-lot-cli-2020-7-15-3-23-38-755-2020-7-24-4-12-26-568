@@ -6,9 +6,6 @@ import com.oocl.cultivation.ParkingBoy;
 import com.oocl.cultivation.ParkingLot;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingBoyTest {
@@ -102,35 +99,29 @@ public class ParkingBoyTest {
             parkingBoy.park(new Car());
         }
         //when
-        String result = (String) parkingBoy.park(new Car());
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            parkingBoy.park(new Car());
+        });
 
         //then
-        assertEquals("Not enough position.", result);
+        assertEquals("Not enough position.", exception.getMessage());
     }
 
     @Test
     void should_park_the_car_to_another_parking_lot_when_park_car_from_full_capacity_parking_lot_given_car() {
         //given
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
-        parkingLots.add(parkingLot1);
-        ParkingLot parkingLot2 = new ParkingLot(2, 5);
-        parkingLots.add(parkingLot2);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingLot parkingLot1 = new ParkingLot(5);
+        ParkingLot parkingLot2 = new ParkingLot(5);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot1, parkingLot2);
         for (int i = 0; i < 5; i++) {
             parkingBoy.park(new Car());
         }
-        String message = parkingBoy.checkParkingLotLeftCapacity(parkingLot1);
 
         //when
-        Object result = parkingBoy.park(new Car());
-        CarTicket carTicket = null;
-        if (result instanceof CarTicket) {
-            carTicket = (CarTicket) result;
-        }
+        CarTicket carTicket = parkingBoy.park(new Car());
+
         //then
         assertEquals(5, parkingLot1.getPackingRooms().size());
-        assertEquals("Not enough position.", message);
         assertNotNull(carTicket);
         assertEquals(1, parkingLot2.getPackingRooms().size());
     }
@@ -138,33 +129,19 @@ public class ParkingBoyTest {
     @Test
     void should_return_not_enough_ticket_when_park_car_from_all_full_capacity_parking_lot_given_car() {
         //given
-        List<ParkingLot> parkingLots = new ArrayList<>();
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
-        parkingLots.add(parkingLot1);
-        ParkingLot parkingLot2 = new ParkingLot(2, 5);
-        parkingLots.add(parkingLot2);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
-        for (int i = 0; i < 5; i++) {
-            parkingBoy.park(new Car());
-        }
-        String messageFromParkingLot1Capacity = parkingBoy.checkParkingLotLeftCapacity(parkingLot1);
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot1, parkingLot2);
 
         //when
-        for (int i = 0; i < 5; i++) {
-            parkingBoy.park(new Car());
-        }
-        String messageFromParkingLot2Capacity = parkingBoy.checkParkingLotLeftCapacity(parkingLot2);
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
 
-        String messageFromParkCar = null;
-        Object result = parkingBoy.park(new Car());
-        if (result instanceof String) {
-            messageFromParkCar = (String) result;
-        }
+        Throwable exception = assertThrows(RuntimeException.class, () -> parkingBoy.park(new Car()));
 
         //then
-        assertEquals("Not enough position.", messageFromParkingLot1Capacity);
-        assertEquals("Not enough position.", messageFromParkingLot2Capacity);
-        assertEquals("Not enough position.", messageFromParkCar);
+
+        assertEquals("Not enough position.", exception.getMessage());
     }
 
 }

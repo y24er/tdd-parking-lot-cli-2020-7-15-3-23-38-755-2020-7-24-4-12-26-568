@@ -38,18 +38,20 @@ public class ParkingBoy {
         return parkingLot;
     }
 
-    public Object park(Car car) {
-        String message = null;
+    public CarTicket park(Car car) {
+        CarTicket carTicket = null;
+        if (car == null) {
+            return null;
+        }
         for (ParkingLot parkingLot : parkingLots) {
-            message = checkParkingLotLeftCapacity(parkingLot);
-            if (message == null) {
-                return parkingLot.park(car);
+            if (!parkingLot.isFull()) {
+                carTicket = parkingLot.park(car);
+                return carTicket;
             }
         }
-        return message;
-    }
-
-    public String checkParkingLotLeftCapacity(ParkingLot parkingLot) {
-        return parkingLot.isFullCapacity();
+        if (carTicket == null) {
+            throw new RuntimeException("Not enough position.");
+        }
+        return carTicket;
     }
 }
