@@ -25,14 +25,16 @@ public class SmartParkingBoyTest {
         CarTicket carTicket2 = (CarTicket) smartParkingBoy.park(car2);
 
         //then
-        assertEquals(1, carTicket1.getParkingLotId());
-        assertEquals(2, carTicket2.getParkingLotId());
+        assertEquals(1, parkingLot1.getPackingRooms().size());
+        assertEquals(1, parkingLot2.getPackingRooms().size());
     }
 
     @Test
     void should_return_not_enough_position_when_park_car_to_all_full_capacity_parking_lot_given_car() {
         //given
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot(1, 1), new ParkingLot(2, 1));
+        ParkingLot parkingLot1 = new ParkingLot(1, 1);
+        ParkingLot parkingLot2 = new ParkingLot(2, 1);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLot1, parkingLot2);
         Car car1 = new Car();
         Car car2 = new Car();
         Car car3 = new Car();
@@ -43,8 +45,8 @@ public class SmartParkingBoyTest {
         String result = (String) smartParkingBoy.park(car3);
 
         //then
-        assertEquals(1, carTicket1.getParkingLotId());
-        assertEquals(2, carTicket2.getParkingLotId());
+        assertEquals(1, parkingLot1.getPackingRooms().size());
+        assertEquals(1, parkingLot2.getPackingRooms().size());
         assertEquals("Not enough position.", result);
     }
 
@@ -67,12 +69,10 @@ public class SmartParkingBoyTest {
         CarTicket carTicket3 = (CarTicket) smartParkingBoy.park(car3);
 
         //then
-        assertEquals(1, carTicket1.getParkingLotId());
-        assertEquals(2, carTicket2.getParkingLotId());
+        assertEquals(1, parkingLot1.getPackingRooms().size());
+        assertEquals(1, parkingLot2.getPackingRooms().size());
         assertNotNull(fetchCar1);
         assertEquals(car1, fetchCar1);
-        assertEquals(1, carTicket3.getParkingLotId());
-
     }
 
 }

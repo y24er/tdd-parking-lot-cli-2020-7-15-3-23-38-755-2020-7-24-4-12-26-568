@@ -37,11 +37,10 @@ public class SuperSmartParkingBoyTest {
 
         //then
         assertNotNull(carTicket1);
-        assertEquals(1, carTicket1.getParkingLotId());
+        assertEquals(1, parkingLot1.getPackingRooms().size());
+        assertEquals(2, parkingLot2.getPackingRooms().size());
         assertNotNull(carTicket2);
-        assertEquals(2, carTicket2.getParkingLotId());
         assertNotNull(carTicket3);
-        assertEquals(2, carTicket3.getParkingLotId());
     }
 
     @Test

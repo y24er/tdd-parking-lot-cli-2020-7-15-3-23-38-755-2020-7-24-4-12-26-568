@@ -19,27 +19,31 @@ public class ParkingBoy {
     public Object fetch(CarTicket carTicket) {
         String message = verifyCarTicket(carTicket);
         if (message == null) {
-            return getParkingLotByParkingLotId(carTicket.getParkingLotId()).fetch(carTicket);
+            ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
+            return parkingLot.fetch(carTicket);
         } else
             return message;
     }
 
-    public ParkingLot getParkingLotByParkingLotId(int parkingLotId) {
+    public ParkingLot getParkingLotFromCarTicker(CarTicket carTicket) {
         ParkingLot parkingLot = null;
         for (ParkingLot lot : parkingLots) {
-            if (lot.getId() == parkingLotId) {
+            if (lot.packingRooms.containsKey(carTicket)) {
                 parkingLot = lot;
+                break;
             }
         }
         return parkingLot;
     }
 
     public String verifyCarTicket(CarTicket carTicket) {
+        ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
         if (carTicket == null) {
             return "Please provide your parking ticket.";
         }
-        int parkingLotId = carTicket.getParkingLotId();
-        ParkingLot parkingLot = getParkingLotByParkingLotId(parkingLotId);
+        if (parkingLot == null) {
+            return "Unrecognized parking ticket.";
+        }
         return parkingLot.verifyCarTicket(carTicket);
     }
 

@@ -45,10 +45,10 @@ public class ParkingBoyTest {
     @Test
     void should_not_fetch_car_return_unrecognized_parking_ticket_when_fetch_car_given_wrong_ticket() {
         //given
-        Car car = new Car("粤B 12345");
+        Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         CarTicket carTicket = (CarTicket) parkingBoy.park(car);
-        CarTicket wrongCarTicket = new CarTicket(6, "粤A 12245");
+        CarTicket wrongCarTicket = new CarTicket();
 
         //when
         String result = parkingBoy.verifyCarTicket(wrongCarTicket);
@@ -62,7 +62,7 @@ public class ParkingBoyTest {
     @Test
     void should_not_fetch_car_and_return_unrecognized_parking_ticket_when_fetch_car_given_has_been_used_ticket() {
         //given
-        Car car = new Car("粤B 12345");
+        Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         CarTicket carTicket = (CarTicket) parkingBoy.park(car);
         Car fetchCar = (Car) parkingBoy.fetch(carTicket);
@@ -112,22 +112,21 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot2);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         for (int i = 0; i < 5; i++) {
-            parkingBoy.park(new Car("yaa" + i));
+            parkingBoy.park(new Car());
         }
         String message = parkingBoy.checkParkingLotLeftCapacity(parkingLot1);
 
         //when
-        Object result = parkingBoy.park(new Car("license"));
+        Object result = parkingBoy.park(new Car());
         CarTicket carTicket = null;
         if (result instanceof CarTicket) {
             carTicket = (CarTicket) result;
         }
-        int parkingLotId = carTicket.getParkingLotId();
-
         //then
+        assertEquals(5, parkingLot1.getPackingRooms().size());
         assertEquals("Not enough position.", message);
         assertNotNull(carTicket);
-        assertEquals(2, parkingLotId);
+        assertEquals(1, parkingLot2.getPackingRooms().size());
     }
 
     @Test
@@ -140,18 +139,18 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot2);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         for (int i = 0; i < 5; i++) {
-            parkingBoy.park(new Car("yaa" + i));
+            parkingBoy.park(new Car());
         }
         String messageFromParkingLot1Capacity = parkingBoy.checkParkingLotLeftCapacity(parkingLot1);
 
         //when
         for (int i = 0; i < 5; i++) {
-            parkingBoy.park(new Car("yaa" + i));
+            parkingBoy.park(new Car());
         }
         String messageFromParkingLot2Capacity = parkingBoy.checkParkingLotLeftCapacity(parkingLot2);
 
         String messageFromParkCar = null;
-        Object result = parkingBoy.park(new Car("license"));
+        Object result = parkingBoy.park(new Car());
         if (result instanceof String) {
             messageFromParkCar = (String) result;
         }
