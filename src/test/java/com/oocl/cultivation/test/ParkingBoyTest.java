@@ -29,10 +29,10 @@ public class ParkingBoyTest {
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Car car = new Car();
-        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
+        CarTicket carTicket = parkingBoy.park(car);
 
         //when
-        Car fetchCar = (Car) parkingBoy.fetch(carTicket);
+        Car fetchCar = parkingBoy.fetch(carTicket);
 
         //then
         assertNotNull(carTicket);
@@ -40,11 +40,11 @@ public class ParkingBoyTest {
     }
 
     @Test
-    void should_not_fetch_car_return_unrecognized_parking_ticket_when_fetch_car_given_wrong_ticket() {
+    void should_not_fetch_car_and_return_unrecognized_parking_ticket_when_fetch_car_given_wrong_ticket() {
         //given
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
-        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
+        CarTicket carTicket = parkingBoy.park(car);
         CarTicket wrongCarTicket = new CarTicket();
 
         //when
@@ -63,11 +63,10 @@ public class ParkingBoyTest {
         //given
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
-        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
+        CarTicket carTicket = parkingBoy.park(car);
         Car fetchCar = parkingBoy.fetch(carTicket);
 
         //when
-
         Throwable exception = assertThrows(RuntimeException.class, () -> {
             parkingBoy.fetch(carTicket);
         });
@@ -87,17 +86,19 @@ public class ParkingBoyTest {
         Throwable exception = assertThrows(RuntimeException.class, () -> {
             parkingBoy.fetch(null);
         });
+
         //then
         assertEquals("Please provide your parking ticket.", exception.getMessage());
     }
 
     @Test
-    void should_not_park_car_and_return_not_enough_position_when_fetch_car_given_car() {
+    void should_not_park_car_and_return_not_enough_position_when_fetch_car_to_full_capacity_parking_lot_given_car() {
         //given
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         for (int i = 0; i < 10; i++) {
             parkingBoy.park(new Car());
         }
+
         //when
         Throwable exception = assertThrows(RuntimeException.class, () -> {
             parkingBoy.park(new Car());
@@ -140,7 +141,6 @@ public class ParkingBoyTest {
         Throwable exception = assertThrows(RuntimeException.class, () -> parkingBoy.park(new Car()));
 
         //then
-
         assertEquals("Not enough position.", exception.getMessage());
     }
 
