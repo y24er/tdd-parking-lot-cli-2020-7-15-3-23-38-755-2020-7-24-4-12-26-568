@@ -59,4 +59,54 @@ public class SuperSmartParkingBoyTest {
         assertEquals(car, fetchCar);
     }
 
+    @Test
+    void should_not_fetch_car_and_return_unrecognized_parking_ticket_when_fetch_car_given_wrong_ticket() {
+        //given
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        CarTicket carTicket = superSmartParkingBoy.park(new Car());
+        CarTicket wrongCarTicket = new CarTicket();
+
+        //when
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            superSmartParkingBoy.fetch(wrongCarTicket);
+        });
+
+        //then
+        assertNotNull(carTicket);
+        assertNotEquals(carTicket, wrongCarTicket);
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
+    }
+
+    @Test
+    void should_not_fetch_car_and_return_unrecognized_parking_ticket_when_fetch_car_given_has_been_used_ticket() {
+        //given
+        Car car = new Car();
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        CarTicket carTicket = superSmartParkingBoy.park(car);
+        Car fetchCar = superSmartParkingBoy.fetch(carTicket);
+
+        //when
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            superSmartParkingBoy.fetch(carTicket);
+        });
+
+        //then
+        assertNotNull(carTicket);
+        assertEquals(car, fetchCar);
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
+    }
+
+    @Test
+    void should_not_fetch_car_and_return_please_provide_your_parking_ticket_ticket_when_fetch_car_given_null_car_ticket() {
+        //given
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+
+        //when
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            superSmartParkingBoy.fetch(null);
+        });
+
+        //then
+        assertEquals("Please provide your parking ticket.", exception.getMessage());
+    }
 }
