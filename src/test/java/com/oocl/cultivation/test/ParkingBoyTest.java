@@ -10,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingBoyTest {
     @Test
-    void should_return_Car_ticket_when_park_given_car() {
+    void should_return_car_ticket_when_park_given_car() {
         //given
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
         Car car = new Car();
 
         //when
-        CarTicket carTicket = (CarTicket) parkingBoy.park(car);
+        CarTicket carTicket = parkingBoy.park(car);
 
         //then
         assertNotNull(carTicket);
