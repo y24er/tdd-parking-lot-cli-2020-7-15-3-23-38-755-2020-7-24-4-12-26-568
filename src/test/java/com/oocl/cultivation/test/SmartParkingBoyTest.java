@@ -67,7 +67,6 @@ public class SmartParkingBoyTest {
         Car car = new Car();
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot());
         CarTicket carTicket = smartParkingBoy.park(car);
-        CarTicket wrongCarTicket = new CarTicket();
         Car fetchCar = smartParkingBoy.fetch(carTicket);
 
         //when
