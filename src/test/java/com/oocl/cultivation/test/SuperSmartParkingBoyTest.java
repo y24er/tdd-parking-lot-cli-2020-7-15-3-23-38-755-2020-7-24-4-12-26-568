@@ -12,79 +12,101 @@ public class SuperSmartParkingBoyTest {
     @Test
     void should_return_car_ticket_when_park_car_in_larger_available_position_rate_parking_lot_given_car() {
         //given
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
-        ParkingLot parkingLot2 = new ParkingLot(2, 6);
+        ParkingLot parkingLot1 = new ParkingLot(5);
+        ParkingLot parkingLot2 = new ParkingLot(6);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1, parkingLot2);
 
         //when
-        Car car1 = new Car();
-        Object result1 = superSmartParkingBoy.park(car1);
-        CarTicket carTicket1 = null;
-        if (result1 instanceof CarTicket)
-            carTicket1 = (CarTicket) result1;
-
-        Car car2 = new Car();
-        Object result2 = superSmartParkingBoy.park(car2);
-        CarTicket carTicket2 = null;
-        if (result2 instanceof CarTicket)
-            carTicket2 = (CarTicket) result2;
-
-        Car car3 = new Car();
-        Object result3 = superSmartParkingBoy.park(car3);
-        CarTicket carTicket3 = null;
-        if (result3 instanceof CarTicket)
-            carTicket3 = (CarTicket) result3;
+        for (int time = 0; time < 3; time++) {
+            superSmartParkingBoy.park(new Car());
+        }
 
         //then
-        assertNotNull(carTicket1);
-        assertEquals(1, carTicket1.getParkingLotId());
-        assertNotNull(carTicket2);
-        assertEquals(2, carTicket2.getParkingLotId());
-        assertNotNull(carTicket3);
-        assertEquals(2, carTicket3.getParkingLotId());
+        assertEquals(1, parkingLot1.getPackingRooms().size());
+        assertEquals(2, parkingLot2.getPackingRooms().size());
     }
 
     @Test
     void should_return_not_enough_position_when_park_car_in_all_full_parking_lot_given_car() {
         //given
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
-        ParkingLot parkingLot2 = new ParkingLot(2, 6);
+        ParkingLot parkingLot1 = new ParkingLot(5);
+        ParkingLot parkingLot2 = new ParkingLot(6);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1, parkingLot2);
         for (int i = 0; i < 11; i++) {
             superSmartParkingBoy.park(new Car());
         }
 
         //when
-        Object result = superSmartParkingBoy.park(new Car());
-        String message = null;
-        if (result instanceof String)
-            message = (String) result;
+        Throwable exception = assertThrows(RuntimeException.class, () -> superSmartParkingBoy.park(new Car()));
 
         //then
-        assertNotNull(result);
-        assertEquals("Not enough position.", message);
+        assertEquals("Not enough position.", exception.getMessage());
     }
 
     @Test
     void should_return_car_when_fetch_car_given_car_ticket() {
         //given
-        ParkingLot parkingLot1 = new ParkingLot(1, 5);
-        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot1);
+        ParkingLot parkingLot = new ParkingLot(5);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLot);
         Car car = new Car();
-        Object parkResult = superSmartParkingBoy.park(car);
-        CarTicket carTicket = null;
-        if (parkResult instanceof CarTicket)
-            carTicket = (CarTicket) parkResult;
+        CarTicket carTicket = superSmartParkingBoy.park(car);
 
         //when
-        Object fetchResult = superSmartParkingBoy.fetch(carTicket);
-        Car fetchCar = null;
-        if (fetchResult instanceof Car)
-            fetchCar = (Car) fetchResult;
+        Car fetchCar = superSmartParkingBoy.fetch(carTicket);
 
         //then
         assertNotNull(fetchCar);
         assertEquals(car, fetchCar);
     }
 
+    @Test
+    void should_not_fetch_car_and_return_unrecognized_parking_ticket_when_fetch_car_given_wrong_ticket() {
+        //given
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        CarTicket carTicket = superSmartParkingBoy.park(new Car());
+        CarTicket wrongCarTicket = new CarTicket();
+
+        //when
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            superSmartParkingBoy.fetch(wrongCarTicket);
+        });
+
+        //then
+        assertNotNull(carTicket);
+        assertNotEquals(carTicket, wrongCarTicket);
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
+    }
+
+    @Test
+    void should_not_fetch_car_and_return_unrecognized_parking_ticket_when_fetch_car_given_has_been_used_ticket() {
+        //given
+        Car car = new Car();
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+        CarTicket carTicket = superSmartParkingBoy.park(car);
+        Car fetchCar = superSmartParkingBoy.fetch(carTicket);
+
+        //when
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            superSmartParkingBoy.fetch(carTicket);
+        });
+
+        //then
+        assertNotNull(carTicket);
+        assertEquals(car, fetchCar);
+        assertEquals("Unrecognized parking ticket.", exception.getMessage());
+    }
+
+    @Test
+    void should_not_fetch_car_and_return_please_provide_your_parking_ticket_ticket_when_fetch_car_given_null_car_ticket() {
+        //given
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(new ParkingLot());
+
+        //when
+        Throwable exception = assertThrows(RuntimeException.class, () -> {
+            superSmartParkingBoy.fetch(null);
+        });
+
+        //then
+        assertEquals("Please provide your parking ticket.", exception.getMessage());
+    }
 }

@@ -12,49 +12,39 @@ public class ParkingBoy {
         }
     }
 
-    public ParkingBoy(List<ParkingLot> parkingLots) {
-        this.parkingLots = parkingLots;
+    public Car fetch(CarTicket carTicket) {
+        if (carTicket == null) {
+            throw new RuntimeException("Please provide your parking ticket.");
+        }
+        ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
+        if (parkingLot == null) {
+            throw new RuntimeException("Unrecognized parking ticket.");
+        }
+        return parkingLot.fetch(carTicket);
     }
 
-    public Object fetch(CarTicket carTicket) {
-        String message = verifyCarTicket(carTicket);
-        if (message == null) {
-            return getParkingLotByParkingLotId(carTicket.getParkingLotId()).fetch(carTicket);
-        } else
-            return message;
-    }
-
-    public ParkingLot getParkingLotByParkingLotId(int parkingLotId) {
+    public ParkingLot getParkingLotFromCarTicker(CarTicket carTicket) {
         ParkingLot parkingLot = null;
         for (ParkingLot lot : parkingLots) {
-            if (lot.getId() == parkingLotId) {
+            if (lot.packingRooms.containsKey(carTicket)) {
                 parkingLot = lot;
+                break;
             }
         }
         return parkingLot;
     }
 
-    public String verifyCarTicket(CarTicket carTicket) {
-        if (carTicket == null) {
-            return "Please provide your parking ticket.";
-        }
-        int parkingLotId = carTicket.getParkingLotId();
-        ParkingLot parkingLot = getParkingLotByParkingLotId(parkingLotId);
-        return parkingLot.verifyCarTicket(carTicket);
-    }
-
-    public Object park(Car car) {
-        String message = null;
+    public CarTicket park(Car car) {
+        CarTicket carTicket = null;
         for (ParkingLot parkingLot : parkingLots) {
-            message = checkParkingLotLeftCapacity(parkingLot);
-            if (message == null) {
-                return parkingLot.park(car);
+            if (!parkingLot.isFull()) {
+                carTicket = parkingLot.park(car);
+                return carTicket;
             }
         }
-        return message;
-    }
-
-    public String checkParkingLotLeftCapacity(ParkingLot parkingLot) {
-        return parkingLot.isFullCapacity();
+        if (carTicket == null) {
+            throw new RuntimeException("Not enough position.");
+        }
+        return carTicket;
     }
 }

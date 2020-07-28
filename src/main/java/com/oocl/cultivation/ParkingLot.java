@@ -5,54 +5,36 @@ import java.util.Map;
 
 public class ParkingLot {
     Map<CarTicket, Car> packingRooms = new HashMap<>();
-    private int id;
     private int capacity;
-    private TicketSystem ticketSystem = new TicketSystem();
 
     public ParkingLot() {
         this.capacity = 10;
     }
 
-    public ParkingLot(int id, int capacity) {
-        this.id = id;
+    public ParkingLot(int capacity) {
         this.capacity = capacity;
     }
 
-    public int getId() {
-        return id;
+    public Map<CarTicket, Car> getPackingRooms() {
+        return packingRooms;
     }
 
     public CarTicket park(Car car) {
-        if (car != null && !isParkIn(car) && isFullCapacity() == null) {
-            CarTicket carTicket = ticketSystem.createCarTicket(car.getLicensePlateNumber(), this.getId());
-            packingRooms.put(carTicket, car);
-            return carTicket;
-        } else {
+        if (isParkIn(car) || isFull())
             return null;
-        }
+        CarTicket carTicket = new CarTicket();
+        packingRooms.put(carTicket, car);
+        return carTicket;
     }
 
     public Car fetch(CarTicket carTicket) {
         Car fetchCar = packingRooms.get(carTicket);
         packingRooms.remove(carTicket);
-        ticketSystem.updateCarTicket(carTicket);
         return fetchCar;
     }
 
-    public String verifyCarTicket(CarTicket carTicket) {
-        return ticketSystem.verifyCarTicket(carTicket);
-    }
-
-    public String isFullCapacity() {
-        String message = null;
-        if (capacity == packingRooms.size()) {
-            message = "Not enough position.";
-        }
-        return message;
-    }
-
-    public boolean isParkIn(Car car) {
-        return packingRooms.containsValue(car);
+    public boolean isFull() {
+        return packingRooms.size() == capacity;
     }
 
     public int getEmptyPositionNumber() {
@@ -61,5 +43,9 @@ public class ParkingLot {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public boolean isParkIn(Car car) {
+        return packingRooms.containsValue(car);
     }
 }
