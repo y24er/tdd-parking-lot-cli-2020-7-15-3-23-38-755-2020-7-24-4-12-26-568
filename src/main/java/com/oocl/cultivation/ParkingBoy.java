@@ -16,7 +16,6 @@ public class ParkingBoy {
         if (carTicket == null) {
             throw new RuntimeException(ErrorMessage.Message.NULL_TICKET.toString());
         }
-
         ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
         if (parkingLot == null) {
             throw new RuntimeException(ErrorMessage.Message.UNRECOGNIZED_TICKET.toString());
