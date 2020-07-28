@@ -32,11 +32,11 @@ public class ParkingBoyTest {
         CarTicket carTicket = parkingBoy.park(car);
 
         //when
-        Car fetchCar = parkingBoy.fetch(carTicket);
+        Car fetchedCar = parkingBoy.fetch(carTicket);
 
         //then
         assertNotNull(carTicket);
-        assertNotNull(fetchCar);
+        assertNotNull(fetchedCar);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ParkingBoyTest {
         Car car = new Car();
         ParkingBoy parkingBoy = new ParkingBoy(new ParkingLot());
         CarTicket carTicket = parkingBoy.park(car);
-        Car fetchCar = parkingBoy.fetch(carTicket);
+        Car fetchedCar = parkingBoy.fetch(carTicket);
 
         //when
         Throwable exception = assertThrows(RuntimeException.class, () -> {
@@ -73,7 +73,7 @@ public class ParkingBoyTest {
 
         //then
         assertNotNull(carTicket);
-        assertEquals(car, fetchCar);
+        assertEquals(car, fetchedCar);
         assertEquals("Unrecognized parking ticket.", exception.getMessage());
     }
 
