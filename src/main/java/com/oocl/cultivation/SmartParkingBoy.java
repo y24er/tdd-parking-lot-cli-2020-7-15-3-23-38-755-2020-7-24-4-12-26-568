@@ -8,13 +8,13 @@ public class SmartParkingBoy extends ParkingBoy {
     @Override
     public CarTicket park(Car car) {
         ParkingLot parkingLot = getMoreEmptyPositionParkingLot();
-        if (parkingLot != null) {
-            return parkingLot.park(car);
-        } else {
+        if (parkingLot == null) {
             throw new RuntimeException("Not enough position.");
         }
+        return parkingLot.park(car);
     }
 
+    //todo
     public ParkingLot getMoreEmptyPositionParkingLot() {
         ParkingLot parkingLot = null;
         int maxNumber = 0;
