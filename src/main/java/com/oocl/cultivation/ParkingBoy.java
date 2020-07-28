@@ -14,11 +14,12 @@ public class ParkingBoy {
 
     public Car fetch(CarTicket carTicket) {
         if (carTicket == null) {
-            throw new RuntimeException("Please provide your parking ticket.");
+            throw new RuntimeException(ErrorMessage.Message.NULL_TICKET.toString());
         }
+
         ParkingLot parkingLot = getParkingLotFromCarTicker(carTicket);
         if (parkingLot == null) {
-            throw new RuntimeException("Unrecognized parking ticket.");
+            throw new RuntimeException(ErrorMessage.Message.UNRECOGNIZED_TICKET.toString());
         }
         return parkingLot.fetch(carTicket);
     }
@@ -43,7 +44,7 @@ public class ParkingBoy {
             }
         }
         if (carTicket == null) {
-            throw new RuntimeException("Not enough position.");
+            throw new RuntimeException(ErrorMessage.Message.NON_POSITION.toString());
         }
         return carTicket;
     }
