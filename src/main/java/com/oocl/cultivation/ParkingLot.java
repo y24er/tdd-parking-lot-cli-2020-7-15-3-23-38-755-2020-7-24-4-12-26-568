@@ -45,7 +45,7 @@ public class ParkingLot {
         return capacity;
     }
 
-    public boolean isParkIn(Car car) {
+    private boolean isParkIn(Car car) {
         return packingRooms.containsValue(car);
     }
 }
